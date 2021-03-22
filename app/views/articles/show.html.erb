@@ -10,9 +10,15 @@
           </div>
           <div class="card-body">
             <div class="card-text text-left"><%= simple_format(@article.description) %></div>
+           <% if logged_in? && (@article.user == current_user || current_user.admin?) %>
             <%= link_to "Edit", edit_article_path(@article), class:"btn btn-outline-info" %>
             <%= link_to "Delete", article_path(@article), method: :delete, data: {confirm: "Are you sure?"}, class:"btn btn-outline-danger" %>
+           <% end %>
+           <%# Start- Not part of course %>
+           <% if logged_in? %> 
             <%= link_to 'Create new article', new_article_path, class:"btn btn-outline-warning"  %>
+           <% end %>
+           <%# End- Not part of course %>
           </div>
           <div class="card-footer text-muted">
             <small>Created <%= time_ago_in_words(@article.created_at) %> ago,
